@@ -1,0 +1,42 @@
+
+body {background-color:#333029; color:white; font-family:"Palatino"; font-size: 1.2em; letter-spacing: 1px;  margin:30 px;
+}
+p {margin: 2em;
+}
+nav {color:#white; font-size: 1em; margin: 1em; float:left; font-family: "Helvetica"; font-size: .75em; font-weight:600;
+}
+
+a {text-decoration: none;
+}
+
+a:link {color:#D6ABC5;
+
+}
+a:visited {color:#B8B7BA;
+}
+
+a:active {color: yellow;
+}
+
+a:hover {color: #8B8A8C;
+}
+
+
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.home {color:#white; font-size: 1em; margin: 1em; float:right; font-family: "Helvetica"; font-size: .75em; font-weight:600;
+}
+
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+h1 {
+  color:#0BCCC5; letter-spacing: 3px; text-align: center; font-family: "Helvetica"; font-weight: 500;
+}
