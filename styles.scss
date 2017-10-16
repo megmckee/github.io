@@ -1,8 +1,40 @@
+---
+---
 
-body {background-color:#333029; color:white; font-family:"Palatino"; font-size: 1.2em; letter-spacing: 1px;  margin:30 px;
+$yellowColor: #efff7e;
+$smallerfont: .7em;
+
+@mixin headerStyle {
+  color:$yellowColor;
+  margin: 40px;
 }
-p {margin: 2em;
+
+@mixin fontStyle($size) {
+  color: white;
+  font-size: $size;
+
 }
+
+body {background-color:#333029; color:white; font-family:"Palatino"; font-size: 1.2em; letter-spacing: 1px;  margin:0 30px 30px 30px;
+}
+p {margin:60px; @include fontStyle(.9em);
+
+}
+#intro {margin: 40px 400px 20px 400px;
+  padding: 0px 10px;
+  text-align: left;
+  border-width: 0 4px 0 4px;
+  border-color: white;
+  border-style: double;
+  font-family: Helvetica;
+  font-size: .6em;
+
+}
+
+h4 {@include headerStyle();
+
+}
+
 nav {color:#white; font-size: 1em; margin: 1em; float:left; font-family: "Helvetica"; font-size: .75em; font-weight:600;
 }
 
@@ -20,7 +52,6 @@ a:active {color: yellow;
 
 a:hover {color: #8B8A8C;
 }
-
 
 .group:after {
   content: "";
