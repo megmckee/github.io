@@ -14,12 +14,21 @@
 
       function draw(dataArray) {
 
+
       var svg = d3.select("#mysvg")
         .attr("width", window.innerWidth)
         .attr("width", window.innerWidth);
 
-      var circles=svg.selectAll(".dot")
+
+      var circles = svg.selectAll(".dot")
         .data(dataArray);
+
+
+
+      var labels=svg.selectAll(".label")
+        .data(dataArray);
+        labels.exit().remove();
+
 
       circles.exit()
         .transition().duration(1000)
@@ -27,26 +36,49 @@
         .remove();
 
       var enterCircles = circles.enter().append("circle")
-        .attr("r",0)
-        .attr("cy",50)
-        .attr("cx", function(d, index){
-          return 50* (index +1);
-        })
-        .attr("class","dot");
+          .attr("r",0)
+          .attr("cy", "50")
+          .attr("cx", function(d, index) {
+            return 50 * (index+1);
+          })
+          .attr("class", "dot");
 
       circles.merge(enterCircles)
         .transition().duration(1000)
-        .attr("r", function(d) {
-            return d;
+        .attr("r", function(d){
+          return d.value;
+        })
+          .attr("fill", function(d) {
+            return d.color;
+
+        })
+
+      var enterLabels = labels.enter().append("text")
+        .attr("class", "label")
+        .attr("y", "20")
+        .attr("font-size", "8px")
+        .attr("text-anchor", "middle")
+        .attr("x", function(d, index){
+          return 50 * (index +1 );
+        });
+
+      labels.merge(enterLabels)
+        .text(function(d) {
+            return d.country;
 
       });
+}
 
-  }
+//  draw([2, 4, 6, 8]);
 
-  draw([2, 4, 6, 8]);
+  d3.json("data.json", function(error,data) {
+    console.log(data);
+    draw(data);
+  });
+
+  console.log("hi!");
 
     </script>
   </body>
-
 
 </html>
