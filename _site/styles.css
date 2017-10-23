@@ -21,6 +21,10 @@ p, ul {
   font-family: Helvetica;
   font-size: .6em; }
 
+figcaption {
+  padding: 0 4em 0 4em;
+  font-size: .8em; }
+
 img.imgcenter {
   display: block;
   margin-left: auto;
