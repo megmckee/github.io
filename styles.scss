@@ -15,9 +15,9 @@ $smallerfont: .7em;
 
 }
 
-body, ul {background-color:#333029; color:white; font-family:"Palatino"; font-size: 1.2em; letter-spacing: 1px;  margin:0 30px 30px 30px;
+body {background-color:#333029; color:white; font-family:"Palatino"; font-size: 1.2em; letter-spacing: 1px;  margin:0 30px 30px 30px;
 }
-p {margin:60px; @include fontStyle(.9em);
+p, ul {margin:60px; @include fontStyle(.9em);
 
 }
 #intro {margin: 40px 400px 20px 400px;
@@ -34,7 +34,8 @@ p {margin:60px; @include fontStyle(.9em);
 img.imgcenter {
   display: block;
   margin-left: auto;
-  margin-right: auto; 
+  margin-right: auto;
+  padding: 2em;
 
 
 }

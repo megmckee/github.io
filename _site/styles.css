@@ -1,4 +1,4 @@
-body, ul {
+body {
   background-color: #333029;
   color: white;
   font-family: "Palatino";
@@ -6,7 +6,7 @@ body, ul {
   letter-spacing: 1px;
   margin: 0 30px 30px 30px; }
 
-p {
+p, ul {
   margin: 60px;
   color: white;
   font-size: 0.9em; }
@@ -24,7 +24,8 @@ p {
 img.imgcenter {
   display: block;
   margin-left: auto;
-  margin-right: auto; }
+  margin-right: auto;
+  padding: 2em; }
 
 h4 {
   color: #efff7e;
