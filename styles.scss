@@ -15,7 +15,7 @@ $smallerfont: .7em;
 
 }
 
-body {background-color:#333029; color:white; font-family:"Palatino"; font-size: 1.2em; letter-spacing: 1px;  margin:0 30px 30px 30px;
+body, ul {background-color:#333029; color:white; font-family:"Palatino"; font-size: 1.2em; letter-spacing: 1px;  margin:0 30px 30px 30px;
 }
 p {margin:60px; @include fontStyle(.9em);
 
