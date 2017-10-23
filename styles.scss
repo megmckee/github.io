@@ -31,6 +31,14 @@ p {margin:60px; @include fontStyle(.9em);
 
 }
 
+img.imgcenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; 
+
+
+}
+
 h4 {@include headerStyle();
 
 }

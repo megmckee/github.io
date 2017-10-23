@@ -21,6 +21,11 @@ p {
   font-family: Helvetica;
   font-size: .6em; }
 
+img.imgcenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
 h4 {
   color: #efff7e;
   margin: 40px; }
