@@ -3,6 +3,10 @@
 
 $yellowColor: #efff7e;
 $smallerfont: .7em;
+$barefont: 1.2em;
+
+
+@mixin
 
 @mixin headerStyle {
   color:$yellowColor;
@@ -86,4 +90,9 @@ a:hover {color: #8B8A8C;
 
 h1 {
   color:#0BCCC5; letter-spacing: 3px; text-align: center; font-family: "Helvetica"; font-weight: 500;
+}
+
+h1.bare {$barefont, color:#0BCCC5; letter-spacing: 3px; text-align: center; font-family: "Helvetica"; font-weight: 500;
+
+
 }
