@@ -3,10 +3,7 @@
 
 $yellowColor: #efff7e;
 $smallerfont: .7em;
-$barefont: 1.2em;
 
-
-@mixin
 
 @mixin headerStyle {
   color:$yellowColor;
@@ -92,7 +89,16 @@ h1 {
   color:#0BCCC5; letter-spacing: 3px; text-align: center; font-family: "Helvetica"; font-weight: 500;
 }
 
-h1.bare {font-size: 1em, color:#0BCCC5; letter-spacing: 3px; text-align: center; font-family: "Helvetica"; font-weight: 500;
+h1.bare {
+  font-size: 1em;
+  text-transform: lowercase;
+  font-weight: 400;
+  text-decoration: underline;
+    text-decoration-style: wavy; 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
 
 
 }

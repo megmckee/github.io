@@ -84,3 +84,13 @@ h1 {
   text-align: center;
   font-family: "Helvetica";
   font-weight: 500; }
+
+h1.bare {
+  font-size: 1em;
+  text-transform: lowercase;
+  font-weight: 400;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
