@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    .axis text {
+      font: 10px sans-serif;
+    }
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    </style>
+  </head>
+  <body>
+    <script src="numbers.js"></script>
+
+    <svg id="mysvg"></svg>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <script>
+
+      var margin = {
+      top: 20,
+      right: 20,
+      bottom: 30,
+      left: 60
+        }
+      width = 960 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
+
+      // Our X scale
+
+      var y=d3.scale.linear()
+        .domain(0,6000);
+        .range(0, 7000);
+        .color("blue");
+
+
+      var x= d3.scaleTime()
+        .domain([new Date(2015, 0, 1),
+          new Date(2017, 2, 1)]);
+        .range([0, width]);
+
+      var xAxis = d3.svg.axis()
+          .scale(x);
+          .orient("bottom");
+          .ticks(d3.time.months);
+          .tickSize(16, 0);
+          .tickFormat(d3.time.format("%B"));
+
+      var yAxis = d3.svg.axis()
+          .scale(y);
+          .orient("left");
+
+      d3.csv("/assets/OverdoseDeaths.csv", function(data) {
+            data.forEach(function(d) {
+              d.population = +d.population;
+              d["land area"] = +d["land area"];
+            });
+            console.log(data[0]);
+          });
+
+
+      d3.csv("assets/OverdoseDeaths.csv?$select=year,Deaths,PercentComplete,PercentPendingInvestigation", function (error, data) {
+          // Make sure our numbers are really numbers
+          data.forEach(function (d) {
+              d.year = +d.year;
+              d.Deaths = +d.Deaths;
+              d.PercentComplete = +d.PercentComplete;
+              d.PercentPendingInvestigation = +d.PercentPendingInvestigation;
+          });
+
+          console.log(data);
+
+  </script>
+</body>
+
+</html>
