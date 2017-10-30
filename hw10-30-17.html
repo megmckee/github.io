@@ -1,3 +1,8 @@
+---
+layout: bare
+page.title: First D3 attempt
+---
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -58,7 +63,6 @@
 
 
       d3.csv("assets/OverdoseDeaths.csv?$select=year,Deaths,PercentComplete,PercentPendingInvestigation", function (error, data) {
-          // Make sure our numbers are really numbers
           data.forEach(function (d) {
               d.year = +d.year;
               d.Deaths = +d.Deaths;
@@ -67,6 +71,9 @@
           });
 
           console.log(data);
+
+
+
 
   </script>
 </body>
