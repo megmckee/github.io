@@ -1,3 +1,11 @@
+body.viz {
+  letter-spacing: 0;
+  color: black; }
+
+p.viz {
+  font-family: Georgia, serif;
+  color: black; }
+
 body {
   background-color: #333029;
   color: white;
@@ -12,7 +20,7 @@ p, ul {
   font-size: 0.9em; }
 
 #intro {
-  margin: 40px 400px 20px 400px;
+  margin: 40px 8em 20px 8em;
   padding: 0px 10px;
   text-align: left;
   border-width: 0 4px 0 4px;

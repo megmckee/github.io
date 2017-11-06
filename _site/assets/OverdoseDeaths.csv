@@ -1,4 +1,4 @@
-State,State Name,Year,Month,Period,Indicator,Data Value,Percent Complete,Percent Pending Investigation,Footnote
+State,State Name,Year,Month,Period,Indicator,Deaths,PercentComplete,PercentPendingInvestigation,Footnote
 AK,Alaska,2015,January,12 month-ending,Number of Deaths,4034,100,0,
 AK,Alaska,2015,February,12 month-ending,Number of Deaths,4084,100,0,
 AK,Alaska,2015,March,12 month-ending,Number of Deaths,4101,100,0,
