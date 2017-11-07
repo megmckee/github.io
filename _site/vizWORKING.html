@@ -26,6 +26,13 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://unpkg.com/topojson@3"></script>
+
+
+
+
+
   </head>
   <body class="viz" style="color:black; padding: 20px;">
         <div class="row">
@@ -49,7 +56,7 @@
               </div>
 
                 <div class="col-sm-8 col-lg-9">
-                <p style="color:black;">This is where the visualization will be!</p>
+                <svg width="800px" height="800px"></svg>
                 </div>
         </div>
 
@@ -59,7 +66,50 @@
                 </div>
         </div>
 
+        <script>
+              d3.json("assets/usa.json", function(error, data) {
+                  console.log(data);
+                  var geoJSON = topojson.feature(data, data.objects.states);
+                  console.log(geoJSON);
+                  var proj=d3.geoAlbersUsa()
+                      .fitSize([window.innerWidth, window.innerHeight], geoJSON);
+                  var path = d3.geoPath()
+                    .projection(proj);
 
+                  var svg=d3.select("svg")
+                  var states = svg.selectAll("path")
+                  .data(geoJSON.features);
+
+                  states.enter().append("path")
+                    .attr("d", function(d) {
+                      return path(d);
+                    })
+
+                  .attr("fill", function(d){
+                    if (d.id=="MA") {
+                      return "green";
+                    }
+                    else {
+                      return "#d9d9d9";
+                    }
+                  var points = [
+                      {"name": "Boston", "coords": [-71.0589, 42.3601]},
+                      {"name": "Los Angeles", "coords": [-118.2437, 34.0522]}
+                    ];
+
+                  var points = svg.selectAll("circle")
+                      .data(points);
+
+                  points.enter().append("circle")
+                      .attr("r",5)
+                      .attr("fill", "#990099")
+                      .attr("transform", function(d){
+                        return "translate(" + proj(d.coords) + ")";
+                      })
+
+                  });
+                });
+        </script>
 
 
   </body>

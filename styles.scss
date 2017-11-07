@@ -13,9 +13,18 @@ $smallerfont: .7em;
 @mixin fontStyle($size) {
   color: white;
   font-size: $size;
-
 }
 
+@mixin smallText {
+  font-size: 1em;
+  font-family: Helvetica, sans-serif;
+  color: #AFECE7;
+}
+
+
+.media-heading {
+  @include smallText;
+}
 
 body.viz {letter-spacing: 0; color:black;
 
