@@ -24,6 +24,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -67,7 +68,7 @@
         </div>
 
         <script>
-              d3.json("assets/usa.json", function(error, data) {
+              d3.json("assets/states.json", function(error, data) {
                   console.log(data);
                   var geoJSON = topojson.feature(data, data.objects.states);
                   console.log(geoJSON);
