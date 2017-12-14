@@ -1,0 +1,244 @@
+---
+layout: bare
+page.title: First D3 attempt
+---
+
+<!DOCTYPE html>
+<html lang="en">
+      <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+          <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+         <script src="https://d3js.org/d3.v4.min.js"></script>
+         <script src="https://unpkg.com/topojson@3"></script>
+
+
+
+      <style type="text/css">
+          path {
+              fill: #ddd;
+              stroke: #fff;
+              stroke-linejoin: round;
+              stroke-linecap: round;
+              }
+
+
+          path:hover {
+            	fill-opacity: .7;
+            }
+
+            /* Style for Custom Tooltip */
+            div.tooltip {
+             	position: absolute;
+            	text-align: center;
+            	width: 60px;
+            	height: 28px;
+            	padding: 2px;
+            	font: 12px sans-serif;
+            	background: white;
+            	border: 0px;
+            	border-radius: 8px;
+            	pointer-events: none;
+            }
+
+            /* Legend Font Style */
+            body {
+            	font: 11px sans-serif;
+            }
+
+    /* Legend Position Style */
+    .legend {
+    	position:absolute;
+    	left:800px;
+    	top:350px;
+    }
+      </style>
+
+
+
+  </head>
+  <body>
+      <div class="container">
+          <div class="row">
+              <div class="col-12">
+                <h1>Meg's visualization<br>
+                <small>It's pretty awesome (actually, not quite yet).</small>
+                </h1>
+              </div>
+        </div>
+      </div>
+
+        <div class="row">
+              <div class="col-12">
+
+                    <h3>All about this viz. </h3>
+                    <p style="color:black;">This is all the information about the visualization. The information will be interesting and will be the perfect accompaniment to the visualization.
+                    </p>
+                </div>
+              </div>
+
+          <div class="row">
+              <div class="col-12">
+                <svg width="960" height="600px"></svg>
+                </div>
+        </div>
+
+      <div class="row">
+              <div class="col-12">
+              <p style="color:black;">This amazing piece of work done by Megan McKee.</p>
+              </div>
+      </div>
+
+
+
+
+        <script>
+
+            var w = 960;
+            var h = 500;
+
+            var odrateTable = "assets/odrates.csv";
+
+            var jsonTable = "assets/states.csv";
+
+
+
+            var min = 0, max = 20;
+
+            //var minColor = "#BFD3E6", maxColor = "#88419D";
+
+          //  var color = d3.scale.linear()
+            //.domain([min, max])
+            //.range([minColor, maxColor]);
+
+            //  d3.queue()
+              //  .defer(d3.csv, "assets/odrates.csv")
+              //  .defer(d3.json, "assets/states.json")
+            //    .awaitAll(function(error, files) {
+              //    console.log(files);
+                //  var dataset = files[0];
+                //  var data = files[1];
+                //  var geoJSON = topojson.feature(data, data.objects.states);
+                //  console.log(geoJSON);
+                  var proj=d3.geoAlbersUsa()
+                      .fitSize([window.innerWidth, window.innerHeight], geoJSON)
+                      .scale([800]);
+
+                  var path = d3.geoPath()
+                    .projection(proj);
+
+                  var color = d3.scaleLinear()
+                    .domain([1,40])
+                    .interpolate(d3.interpolateHcl)
+                    .range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
+
+                var legendText = ["2015", "2013", "2011", "2009", "2007", "2005"];
+
+
+
+                  var svg = d3.select("body")
+        			       .append("svg")
+        			       .attr("width", w)
+        			       .attr("height", h);
+
+
+                 var div = d3.select("body")
+             		    .append("div")
+                 		.attr("class", "tooltip")
+                 		.style("opacity", 0);
+
+                var geoJSON = topojson.feature(data, data.objects.states);
+
+                    d3.csv("/assets/odrates.csv", function(data) {
+                      color.domain([0,45]);
+                      var minrate2015 = d3.min(data, function(d) { return d.rate2015; });
+console.log(minrate2015);
+
+
+                    d3.json("/assets/states.json", function(json) {
+                        for (var i = 0; i < data.length; i++) {
+                          var stateName = data[i].State;
+                          var geoID = data[i].geoID;
+                          var rate2015 = data[i].rate2015;
+
+                          for (var j = 0; j < geoJSON.features.length; j++)  {
+		                        var jsonState = geoJSON.features[j].properties.id;
+
+		                       if (geoID == jsonState) {
+                             geoJSON.features[j].properties.rate2015 = rate2015;
+
+                    break;
+                  }
+                  }
+                }
+                svg.selectAll("path")
+                    .data(geoJSON.features)
+                    .enter()
+                    .append("path")
+                    .attr("d", path)
+                    .style("stroke", "#fff")
+                    .style("stroke-width", "1")
+                    .style("fill", function(d) {
+
+                    // Get data value
+                    var value = d.properties.rate2015;
+
+                    if (value) {
+
+                            return color(value);
+                            }
+                            else {
+                          //If value is undefined…
+                            return "#F8FFFD";
+                            }
+                        });
+//Tooltip
+              //    .on("mouseover", function(d) {
+                //      div.transition()
+            //               .duration(200)
+            //               .style("opacity", .9);
+            //            div.text(d.State)
+          //                 .style("left", (d3.event.pageX) + "px")
+          //                 .style("top", (d3.event.pageY - 28) + "px");
+        //          })
+
+                    // fade out tooltip on mouse out
+        //            .on("mouseout", function(d) {
+        //                div.transition()
+        //                   .duration(500)
+        //                   .style("opacity", 0);
+        //            });
+        //          });
+
+// Modified Legend Code
+                  var legend = d3.select("body").append("svg")
+                		.attr("class", "legend")
+               			.attr("width", 140)
+              			.attr("height", 200)
+             				.selectAll("g")
+             				.data(color.domain().slice().reverse())
+             				.enter()
+             				.append("g")
+               			.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+          	       legend.append("rect")
+                 		  .attr("width", 18)
+                 		  .attr("height", 18)
+                 		  .style("fill", color);
+
+          	legend.append("text")
+          		  .data(legendText)
+              	  .attr("x", 24)
+              	  .attr("y", 9)
+              	  .attr("dy", ".35em")
+              	  .text(function(d) { return d; });
+        	});
+
+        });
+            </script>
+        </body>
+  </html>

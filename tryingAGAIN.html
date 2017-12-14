@@ -1,0 +1,177 @@
+---
+layout: bare
+page.title: First D3 attempt
+---
+
+<!DOCTYPE html>
+<html lang="en">
+      <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+          <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+         <script src="https://d3js.org/d3.v4.min.js"></script>
+         <script src="https://unpkg.com/topojson@3"></script>
+
+
+
+      <style type="text/css">
+
+
+          .states :hover {
+          fill: red;
+          }
+
+
+        .state-borders {
+            fill: none;
+            stroke: #fff;
+            stroke-width: 0.5px;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+            pointer-events: none;
+          }
+
+
+
+
+            /* Style for Custom Tooltip */
+            div.tooltip {
+             	position: absolute;
+            	text-align: center;
+            	width: 60px;
+            	height: 28px;
+            	padding: 2px;
+            	font: 12px sans-serif;
+            	background: white;
+            	border: 0px;
+            	border-radius: 8px;
+            	pointer-events: none;
+            }
+
+            /* Legend Font Style */
+            body {
+            	font: 11px sans-serif;
+            }
+
+    /* Legend Position Style */
+    .legend {
+    	position:absolute;
+    	left:800px;
+    	top:350px;
+    }
+      </style>
+
+
+
+  </head>
+  <body>
+      <div class="container">
+          <div class="row">
+              <div class="col-12">
+                <h1>Meg's visualization<br>
+                <small>It's pretty awesome (actually, not quite yet).</small>
+                </h1>
+              </div>
+        </div>
+      </div>
+
+        <div class="row">
+              <div class="col-12">
+
+                    <h3>All about this viz. </h3>
+                    <p style="color:black;">This is all the information about the visualization. The information will be interesting and will be the perfect accompaniment to the visualization.
+                    </p>
+                </div>
+              </div>
+
+          <div class="row">
+              <div class="col-12">
+                <svg width="960" height="600px"></svg>
+                </div>
+        </div>
+
+      <div class="row">
+              <div class="col-12">
+              <p style="color:black;">This amazing piece of work done by Megan McKee.</p>
+              </div>
+      </div>
+
+
+              <script>
+
+
+
+              var geoJSON = topojson.feature(data, us.objects.states);
+
+              var odrateTable = "assets/odrates.csv";
+
+              var jsonTable = "assets/states.csv";
+
+              var legendText = ["OD rates - 2015", "OD rates - 2013", "OD rates - 2011", "OD rates - 2009", "OD rates - 2007", "OD rates - 2005"];
+
+
+              var min = 0, max = 40;
+
+
+              var color = d3.scaleLinear()
+                .domain([1,45])
+                .interpolate(d3.interpolateHcl)
+                .range([d3.rgb("#007AFF"), d3.rgb('#FFF500')]);
+
+
+
+              var svg = d3.select("svg");
+
+              var path = d3.geoPath();
+
+              d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
+              if (error) throw error;
+
+              var div = d3.select("body")
+                 .append("div")
+                 .attr("class", "tooltip")
+                 .style("opacity", 0);
+
+              svg.append("g")
+                  .attr("class", "states")
+                .selectAll("path")
+                .data(topojson.feature(us, us.objects.states).features)
+                .enter().append("path")
+                  .attr("d", path);
+
+              svg.append("path")
+                  .attr("class", "state-borders")
+                  .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; })));
+
+
+
+            d3.csv("/assets/odrates.csv", function(data) {
+                .selectAll("path")
+                .data(topojson.feature(us, us.objects.states).features)
+                .enter().append("path")
+                  .attr("d", path);
+                  
+
+                .style("fill", function(d) {
+                    var value = d.rate2015;
+                    if (value) {
+                            return color(value);
+                            }
+                            else {
+                          //If value is undefined…
+                            return "#F8FFFD";
+                            }
+                        });
+              });
+
+
+        });
+                  });
+
+              </script>
+              </body>
+            </html>
