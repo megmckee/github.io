@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+    <head>
+        <style>
+
+              body {
+                background-color: #8D94A1;
+                color:white;
+                text-decoration: none;
+                padding:30px;
+              }
+
+              .grandparentrate {
+                  fill-opacity:.3;
+              }
+              .odrate {
+                fill-opacity:.6;
+              }
+
+              .headerText {
+                color: white;
+                font-family: Helvetica, sans-serif;
+                font-size: 2.5rem;
+                text-align: center;
+                line-height: 90%;
+                letter-spacing: 100%;
+
+
+              }
+
+              .noUnderline {
+                text-decoration: none;
+              }
+
+             a {
+               color:#F8F32B;
+             }
+
+            p {
+              color:black;
+            }
+
+            .serif {
+              font-family: Georgia, serif;
+            }
+
+        </style>
+          <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+          <script src="https://d3js.org/d3.v4.min.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+          <script src="https://d3js.org/d3-color.v1.min.js"></script>
+          <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+          <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    </head>
+
+    <body style="background-color: #ACB4C4;" >
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                  <p class="headerText oUnderline">Opiate addiction's cruelest costs<br>
+                  <p style="font-size:1.2rem;">By Megan McKee</p>
+                </p>
+                </div>
+          </div>
+
+
+          <div class="row">
+                <div class="col-12 noUnderline serif">
+
+                    <p>This visualization explores whether there is a correlation between overdose rates and grandparents acting as sole caregivers for their grandchildren. Presumably, states with higher overdose rates have higher opiate abuse rates, and more addicts mean more children affected.
+                  <br><br>
+                    The data on grandparents as sole caregivers comes from the U.S. Census Bureau. The overdose rates come from the Kaiser Family Foundation's <a href="https://www.kff.org/other/state-indicator/opioid-overdose-death-rates/?currentTimeframe=0&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D">analysis of data </a>from the CDC and the National Center for Health Statistics.
+                      </p>
+
+
+                  </div>
+          </div>
+
+          <div class="row">
+                  <div class="col-12">
+
+                  </div>
+          </div>
+
+          <div class="row">
+                <div class="col-12">
+
+        >
+
+          <svg width="960" height="600px"></svg>
+            <script>
+                var w = 960;
+                var h = 500;
+                var padding = 20;
+
+                var dataset=  d3.csv("assets/odratesGrandparents.csv", function(error, data) {
+
+                  // Convert strings to numbers.
+                  data.forEach(function(d) {
+
+                    d.rate2015 = +d.rate2015;
+                    d.rate2014 = +d.rate2014;
+                    d.rate2013 = +d.rate2013;
+                    d.rate2012 = +d.rate2012;
+                    d.rate2011 = +d.rate2011;
+                    d.rate2010 = +d.rate2010;
+                    d.rate2009 = +d.rate2009;
+                    d.rate2008 = +d.rate2008;
+                    d.rate2007 = +d.rate2007;
+                    d.rate2006 = +d.rate2006;
+                    d.rate2005 = +d.rate2005;
+
+                  });
+
+
+
+                  var color = d3.scale.category20c();
+
+
+
+                  var xScale =  d3.scale.linear()
+                            .domain([0, d3.max(dataset, function(dataset) { return d.rate2015[0]; })])
+                            .range([padding, w - padding * 2]);
+
+                  var yScale = d3.scale.linear()
+                              .domain([0, d3.max(dataset, function(dataset) { return d.rate2015[0]; })])
+
+                              .range([h - padding, padding]);
+
+                  var aScale = d3.scale.sqrt()
+                              .domain([0, d3.max(dataset, function(dataset) { return d.rate2015[0]; })])
+                              .range([0, 10]);
+
+                  var svg = d3.select("body")
+                        .append("svg")
+                        .attr("width", w)
+                        .attr("height", h);
+
+                  //Create circles
+                  svg.selectAll("circle")
+                     .data(dataset)
+                     .enter()
+                     .append("circle")
+
+
+                     .attr("cx", function(d.rate2015) {
+                        return xScale(d[0]);
+                     })
+
+                     .attr("cy", function(d.rate2015) {
+                       return yScale(d[1]);
+                    })
+                    .attr("r", function(d.rate2015) {
+           			   		return aScale(d[1]);
+           			    })
+                     .attr("class", "grandparentrate");
+
+                  svg.selectAll("circle")
+                    .data(dataset)
+                    .enter()
+                    .attr("cx", function(d.rate2015) {
+                       return xScale(d[0]);
+                     })
+                     .attr("cy", function(d.rate2015) {
+                       return yScale(d[1]);
+                     })
+                     .attr("r", function(d.rate2015) {
+            			   		return aScale(d[0]);
+
+                     })
+                    .attr("fill", color)
+                    .attr("class", "odrate");
+
+
+                     svg.selectAll("text")
+                        .data(dataset)
+                        .enter()
+                        .append("text")
+                        .text(function(d) {
+                           return d.location;
+                        })
+                        .attr("x", function(d.rate2015) {
+                           return xScale(d[0]);
+                        })
+                        .attr("y", function(d.rate2015) {
+                           return yScale(d[1]);
+                        })
+                        .attr("font-family", "sans-serif")
+                        .attr("font-size", "11px")
+                        .attr("fill", "black");
+
+
+              });
+            </script>
+      </body>
+</html>
